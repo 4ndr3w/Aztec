@@ -27,40 +27,17 @@ public class ClientHandler extends Thread {
 	public void run()
 	{
 		try {
-			Vector<String> headerData = new Vector<String>();
-			System.out.println("Waiting for data...");
-			while ( !reader.ready() && client.isConnected() ); // wait for data
-			System.out.println("Got data...");
-			while ( client.isConnected() )
-			{
-				String line = reader.readLine();
-				if ( line == null)
-					break;
-						
-				if ( line.equals("") )
-				{
-					System.out.println("End of headers!");
-					HTTPRequest req = new HTTPRequest(headerData);
-					writer.write("Content-type: text/plain\n");
-					writer.write("\n");
-					writer.write("You wanted: "+req.getPath()+" using method: "+req.type+"\n");
-					writer.flush();
-					
-					writer.close();
-					reader.close();
-					
-					client.close();
-					System.out.println("broke out of while!");
-					break;
-				}
-				headerData.add(line);
-			}
-		}
-		catch ( Exception e )
-		{
+			HTTPRequest req = HTTPRequest.fromSocket(client);
+			String data = "request for "+req.getPath()+"\n";
+			HTTPResponse response = new HTTPResponse(200, "OK", data);
+			response.send(client);
+			client.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Client disconnected");
+		
+		
 	}
 	
 }
