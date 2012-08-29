@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.Vector;
 
 public class ClientHandler extends Thread {
 	Socket client = null;
@@ -28,7 +27,7 @@ public class ClientHandler extends Thread {
 	{
 		try {
 			HTTPRequest req = HTTPRequest.fromSocket(client);
-			String data = "request for "+req.getPath()+"\n";
+			String data = "request for "+req.getPath()+" directed at "+req.getHeader("Host")+"\n";
 			HTTPResponse response = new HTTPResponse(200, "OK", data);
 			response.send(client);
 			client.close();
