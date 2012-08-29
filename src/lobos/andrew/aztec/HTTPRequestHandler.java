@@ -26,14 +26,15 @@ public class HTTPRequestHandler {
 		plugins.add(plugin);
 	}
 	
-	public void handle(HTTPRequest req)
+	public HTTPResponse handle(HTTPRequest req)
 	{
 		Iterator<Plugin> it = plugins.iterator();
 		while ( it.hasNext() )
 		{
 			Plugin thisPlugin = it.next();
 			if ( thisPlugin.handles(req) )
-				thisPlugin.handle(req);
+				return thisPlugin.handle(req);
 		}
+		return new HTTPResponse(500, "Internal Server Error", "No plugins where able to handle your request.");
 	}
 }

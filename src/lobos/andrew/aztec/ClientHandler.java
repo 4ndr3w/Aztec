@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import lobos.andrew.aztec.plugin.Index;
+
 public class ClientHandler extends Thread {
 	Socket client = null;
 	BufferedReader reader;
@@ -20,6 +22,7 @@ public class ClientHandler extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		HTTPRequestHandler.getInstance().registerPlugin(new Index());
 		start();
 	}
 	
@@ -27,8 +30,7 @@ public class ClientHandler extends Thread {
 	{
 		try {
 			HTTPRequest req = HTTPRequest.fromSocket(client);
-			String data = "request for "+req.getPath()+" directed at "+req.getHeader("Host")+"\n";
-			HTTPResponse response = new HTTPResponse(200, "OK", data);
+			HTTPResponse response = HTTPRequestHandler.getInstance().handle(req);
 			response.send(client);
 			client.close();
 		} catch (IOException e) {
