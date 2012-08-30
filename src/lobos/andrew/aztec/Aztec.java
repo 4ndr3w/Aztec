@@ -2,6 +2,7 @@ package lobos.andrew.aztec;
 
 import java.io.IOException;
 
+import lobos.andrew.aztec.http.HTTPRequestHandler;
 import lobos.andrew.aztec.plugin.Index;
 import lobos.andrew.aztec.plugin.OtherPage;
 import lobos.andrew.aztec.plugin.Plugin;
@@ -24,6 +25,10 @@ public class Aztec {
 	}
 	
 	public static void main(String[] args) throws IOException {
+		
+		Config.init();
+		
+		Config.ensureDefined("port");
 		
 		registerPlugin(new Index());
 		registerPlugin(new OtherPage());

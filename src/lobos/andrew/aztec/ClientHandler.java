@@ -7,12 +7,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import lobos.andrew.aztec.http.HTTPRequest;
+import lobos.andrew.aztec.http.HTTPRequestHandler;
+import lobos.andrew.aztec.http.HTTPResponse;
 import lobos.andrew.aztec.plugin.Index;
 
 public class ClientHandler extends Thread {
 	Socket client = null;
 	BufferedReader reader;
 	BufferedWriter writer;
+	
 	public ClientHandler(Socket client)
 	{
 		this.client = client;

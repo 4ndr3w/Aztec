@@ -1,7 +1,7 @@
 package lobos.andrew.aztec.plugin;
 
-import lobos.andrew.aztec.HTTPRequest;
-import lobos.andrew.aztec.HTTPResponse;
+import lobos.andrew.aztec.http.HTTPRequest;
+import lobos.andrew.aztec.http.HTTPResponse;
 
 public interface Plugin 
 {

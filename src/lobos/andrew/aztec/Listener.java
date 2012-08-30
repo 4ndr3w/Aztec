@@ -9,7 +9,7 @@ public class Listener extends Thread {
 	
 	public Listener() throws IOException
 	{
-		server = new ServerSocket(8080);
+		server = new ServerSocket(Config.getInt("port"));
 		start();
 	}
 	
