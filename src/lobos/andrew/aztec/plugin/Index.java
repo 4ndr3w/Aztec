@@ -12,7 +12,7 @@ public class Index implements Plugin {
 
 	@Override
 	public HTTPResponse handle(HTTPRequest req) {
-		return new HTTPResponse(200, "OK", "Hello from inside a plugin!");
+		return new HTTPResponse(200, "Hello from inside a plugin!");
 	}
 
 }

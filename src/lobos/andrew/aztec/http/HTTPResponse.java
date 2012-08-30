@@ -11,9 +11,31 @@ public class HTTPResponse {
 
 	Vector<String> response = new Vector<String>();
 	String content;
-	public HTTPResponse(int code, String strResponse, String content)
+	
+	public static String stringForResponseCode(int code)
 	{
-		response.add("HTTP/1.1 "+code+" "+strResponse+"\n");
+		switch ( code )
+		{
+			case 200:
+				return "OK";
+			case 401:
+				return "Unauthorized";
+			case 403:
+				return "Forbidden";
+			case 404:
+				return "Not Found";
+			case 500:
+				return "Internal Server Error";
+			case 501:
+				return "Not implemented";
+			default:
+				return "Error";
+		}
+	}
+	
+	public HTTPResponse(int code, String content)
+	{
+		response.add("HTTP/1.1 "+code+" "+stringForResponseCode(code)+"\n");
 		addResponseHeader("Content-Length", String.valueOf(content.length()));
 		addResponseHeader("Content-type", "text/html");
 		addResponseHeader("Server", "Aztec");

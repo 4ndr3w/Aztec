@@ -35,6 +35,6 @@ public class HTTPRequestHandler {
 			if ( thisPlugin.handles(req) )
 				return thisPlugin.handle(req);
 		}
-		return new HTTPResponse(500, "Internal Server Error", "No plugins where able to handle your request.");
+		return new HTTPResponse(500, "No plugins where able to handle your request.");
 	}
 }
