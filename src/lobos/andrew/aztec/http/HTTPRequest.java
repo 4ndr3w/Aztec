@@ -12,18 +12,45 @@ public class HTTPRequest {
 	String path;
 	String type;
 	HashMap<String, String> headers = new HashMap<String,String>();
-	public HTTPRequest(Vector<String> headerData)
+	HashMap<String, String> queryData = new HashMap<String,String>();
+	
+	public HTTPRequest(Vector<String> headerData, String postData)
 	{
 		Iterator<String> it = headerData.iterator();
 		
 		String[] spaceSplit = it.next().split(" ");
 		type = spaceSplit[0];
 		path = spaceSplit[1];
-		
 		while ( it.hasNext() )
 		{
 			String thisHeader[] = it.next().split(": ");
 			headers.put(thisHeader[0], thisHeader[1]);
+		}
+		
+		if ( type.equals("GET") )
+		{
+			String[] querysplit = path.split("\\?");
+			path = querysplit[0];
+			if ( querysplit.length == 2 )
+			{
+				String[] args = querysplit[1].split("&");
+				for ( int i = 0; i < args.length; i++ )
+				{
+					String[] thisValue = args[i].split("=");
+					if ( thisValue.length == 2 )
+						this.queryData.put(thisValue[0], thisValue[1]);
+				}
+			}
+		}
+		else if ( type.equals("POST") )
+		{
+			String[] separatePostData = postData.split("&");
+			for ( int i = 0; i < separatePostData.length; i++ )
+			{
+				String[] thisValue = separatePostData[i].split("=");
+				if ( thisValue.length == 2 )
+					this.queryData.put(thisValue[0], thisValue[1]);
+			}
 		}
 	}
 	
@@ -42,7 +69,13 @@ public class HTTPRequest {
 				break;
 			headerData.add(line);
 		}
-		return new HTTPRequest(headerData);
+		String postData = "";
+
+		// Read POST data if it is available
+		while ( reader.ready() )
+			postData += String.valueOf((char)reader.read());
+		
+		return new HTTPRequest(headerData, postData);
 	}
 	
 	public String getHeader(String name)
@@ -60,6 +93,14 @@ public class HTTPRequest {
 	public String getMethod()
 	{
 		return type;
+	}
+	
+	public String getParam(String key)
+	{
+		String value = queryData.get(key);
+		if ( value == null )
+			return "";
+		return value;
 	}
 
 }

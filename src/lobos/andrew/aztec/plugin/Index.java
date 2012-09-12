@@ -12,7 +12,10 @@ public class Index implements Plugin {
 
 	@Override
 	public HTTPResponse handle(HTTPRequest req) {
-		return new HTTPResponse(200, "Hello from inside a plugin!");
+		if ( req.getMethod().equals("GET") )
+			return new HTTPResponse(200, "<form action='' method='post'><input type='text' name='example'><input type='submit'></form><br>"+req.getMethod());
+		else
+			return new HTTPResponse(200, "Data: "+req.getParam("example"));
 	}
 
 }

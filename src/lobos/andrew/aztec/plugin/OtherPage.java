@@ -7,12 +7,12 @@ public class OtherPage implements Plugin {
 
 	@Override
 	public boolean handles(HTTPRequest req) {
-		return req.getPath().equals("/other");
+		return req.getPath().matches("^/other.+");
+		
 	}
 
 	@Override
 	public HTTPResponse handle(HTTPRequest req) {
-		return new HTTPResponse(200, "Hello from another plugin!");
+		return new HTTPResponse(200, req.getPath()+"<br>"+req.getParam("test"));
 	}
-
 }
