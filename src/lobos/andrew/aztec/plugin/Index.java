@@ -3,7 +3,7 @@ package lobos.andrew.aztec.plugin;
 import lobos.andrew.aztec.http.HTTPRequest;
 import lobos.andrew.aztec.http.HTTPResponse;
 
-public class Index implements Plugin {
+public class Index extends Plugin {
 
 	@Override
 	public boolean handles(HTTPRequest req) {
