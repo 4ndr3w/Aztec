@@ -11,6 +11,7 @@ import java.util.Vector;
 public class HTTPRequest {
 	String path;
 	String type;
+	String host;
 	HashMap<String, String> headers = new HashMap<String,String>();
 	HashMap<String, String> queryData = new HashMap<String,String>();
 	
@@ -26,6 +27,8 @@ public class HTTPRequest {
 			String thisHeader[] = it.next().split(": ");
 			headers.put(thisHeader[0], thisHeader[1]);
 		}
+		
+		host = headers.get("Host").split(":")[0];
 		
 		if ( type.equals("GET") )
 		{
@@ -93,6 +96,11 @@ public class HTTPRequest {
 	public String getMethod()
 	{
 		return type;
+	}
+	
+	public String getHost()
+	{
+		return host;
 	}
 	
 	public String getParam(String key)

@@ -28,13 +28,27 @@ public class HTTPRequestHandler {
 	
 	public HTTPResponse handle(HTTPRequest req)
 	{
-		Iterator<Plugin> it = plugins.iterator();
+		{
+			Iterator<Plugin> it = plugins.iterator();
+			while ( it.hasNext() )
+			{
+				Plugin thisPlugin = it.next();
+				if ( thisPlugin.handles(req) )
+					return thisPlugin.handle(req);
+			}
+		}
+		
+		String debugData = req.getMethod()+" "+req.getPath()+"<br>";
+		debugData += "Host: "+req.getHost()+"<br>";
+		debugData += "<h3>Client Headers</h3>";
+		Iterator<String> it = req.headers.keySet().iterator(); 
 		while ( it.hasNext() )
 		{
-			Plugin thisPlugin = it.next();
-			if ( thisPlugin.handles(req) )
-				return thisPlugin.handle(req);
+			String d = it.next();
+			debugData += d+": "+req.headers.get(d)+"<br>";
 		}
-		return new HTTPResponse(500, "<h1>500 - Internal Server Error</h1>No plugins where able to handle your request.");
+
+		return new HTTPResponse(500, "<h1>500 - Internal Server Error</h1>No plugins where able to handle your request.<br>"+debugData);
+		
 	}
 }

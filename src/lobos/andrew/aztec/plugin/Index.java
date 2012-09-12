@@ -5,9 +5,10 @@ import lobos.andrew.aztec.http.HTTPResponse;
 
 public class Index extends Plugin {
 
-	@Override
-	public boolean handles(HTTPRequest req) {
-		return req.getPath().equals("/");
+	public Index()
+	{
+		PATH = "/";
+		HOST = "^127.0.0.1$";
 	}
 
 	@Override
