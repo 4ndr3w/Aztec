@@ -1,6 +1,7 @@
 package lobos.andrew.aztec.plugin;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import lobos.andrew.aztec.http.HTTPRequest;
@@ -19,11 +20,25 @@ public class CGIExecute extends Plugin {
 	public HTTPResponse handle(HTTPRequest req) {
 		Map<String, String> env = cgiApp.environment();
 		env.put("PATH_TRANSLATED", req.getPath());
+		env.put("PATH_INFO", req.getPath());
+		env.put("REMOTE_ADDR", req.getClientIP());
+		String responseData = "";
 		try {
 			Process cgiProcess = cgiApp.start();
-		} catch (IOException e) {
+			InputStreamReader reader = new InputStreamReader(cgiProcess.getInputStream());
+			
+			cgiProcess.waitFor();
+			
+			while ( reader.ready() )
+			{
+				char[] buffer = new char[50];
+				reader.read(buffer, 0, 50);
+				responseData += new String(buffer);
+			}
+			
+		} catch (Exception e) {
 			return new HTTPResponse(500, "CGI process failed to start.");
 		}
-		return new HTTPResponse(200, ".");
+		return new HTTPResponse(200, responseData);
 	}
 }

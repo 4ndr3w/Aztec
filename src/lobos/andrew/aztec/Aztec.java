@@ -3,6 +3,7 @@ package lobos.andrew.aztec;
 import java.io.IOException;
 
 import lobos.andrew.aztec.http.HTTPRequestHandler;
+import lobos.andrew.aztec.plugin.CGIExecute;
 import lobos.andrew.aztec.plugin.Index;
 import lobos.andrew.aztec.plugin.OtherPage;
 import lobos.andrew.aztec.plugin.Plugin;
@@ -32,7 +33,7 @@ public class Aztec {
 		
 		registerPlugin(new Index());
 		registerPlugin(new OtherPage());
-		
+		registerPlugin(new CGIExecute("/test.sh"));
 		try { start(); }
 		catch (IOException e)
 		{

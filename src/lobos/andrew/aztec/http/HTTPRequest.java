@@ -12,11 +12,13 @@ public class HTTPRequest {
 	String path;
 	String type;
 	String host;
+	String clientIP;
 	HashMap<String, String> headers = new HashMap<String,String>();
 	HashMap<String, String> queryData = new HashMap<String,String>();
 	
-	public HTTPRequest(Vector<String> headerData, String postData)
+	public HTTPRequest(Vector<String> headerData, String postData, String clientIP)
 	{
+		this.clientIP = clientIP;
 		Iterator<String> it = headerData.iterator();
 		
 		String[] spaceSplit = it.next().split(" ");
@@ -78,7 +80,7 @@ public class HTTPRequest {
 		while ( reader.ready() )
 			postData += String.valueOf((char)reader.read());
 		
-		return new HTTPRequest(headerData, postData);
+		return new HTTPRequest(headerData, postData, client.getInetAddress().getHostAddress());
 	}
 	
 	public String getHeader(String name)
@@ -101,6 +103,11 @@ public class HTTPRequest {
 	public String getHost()
 	{
 		return host;
+	}
+	
+	public String getClientIP()
+	{
+		return clientIP;
 	}
 	
 	public String getParam(String key)
