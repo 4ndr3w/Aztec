@@ -1,7 +1,6 @@
 package lobos.andrew.aztec.plugin;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import lobos.andrew.aztec.Config;
@@ -22,7 +21,10 @@ public class StaticServer extends Plugin {
 		if ( path.substring(path.length()-1, path.length()).equals("/") )
 			path += "index.html";
 		File f = new File(Config.getString("docroot")+"/"+path);
-		if ( f.exists() )
+		
+		if ( f.canExecute() && f.getName().split("\\.")[1].equals("cgi") )
+			return new CGIExecute(f.getAbsolutePath()).handle(req);
+		else if ( f.exists() )
 		{
 			try {
 				@SuppressWarnings("resource")

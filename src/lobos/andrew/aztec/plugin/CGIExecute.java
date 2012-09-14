@@ -10,9 +10,7 @@ import lobos.andrew.aztec.http.HTTPResponse;
 public class CGIExecute extends Plugin {
 	ProcessBuilder cgiApp;
 	public CGIExecute(String binPath)
-	{
-		PATH = "/cgi";
-		
+	{	
 		cgiApp = new ProcessBuilder(binPath);
 	}
 

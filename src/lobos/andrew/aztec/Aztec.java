@@ -28,10 +28,7 @@ public class Aztec {
 		Config.init();
 		
 		Config.ensureDefined("port");
-		
-		//registerPlugin(new Index());
-		//registerPlugin(new OtherPage());
-		//registerPlugin(new CGIExecute("/test.sh"));
+		Config.ensureDefined("docroot");
 		registerPlugin(new StaticServer());
 		try { start(); }
 		catch (IOException e)
