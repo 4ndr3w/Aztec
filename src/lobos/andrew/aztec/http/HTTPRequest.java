@@ -131,7 +131,7 @@ public class HTTPRequest {
 			String thisKey = it.next();
 			output += thisKey+"="+queryData.get(thisKey)+"&";
 		}
-		return output;
+		return output.substring(0,output.length()-1);
 		
 	}
 
