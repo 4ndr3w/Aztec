@@ -78,7 +78,11 @@ public class HTTPRequest {
 
 		// Read POST data if it is available
 		while ( reader.ready() )
-			postData += String.valueOf((char)reader.read());
+		{
+			char[] buf = new char[50];
+			reader.read(buf, 0, buf.length);
+			postData += new String(buf);
+		}
 		
 		return new HTTPRequest(headerData, postData, client.getInetAddress().getHostAddress());
 	}
@@ -116,6 +120,19 @@ public class HTTPRequest {
 		if ( value == null )
 			return "";
 		return value;
+	}
+	
+	public String getQueryString()
+	{
+		Iterator<String> it = queryData.keySet().iterator();
+		String output = "";
+		while ( it.hasNext() )
+		{
+			String thisKey = it.next();
+			output += thisKey+"="+queryData.get(thisKey)+"&";
+		}
+		return output;
+		
 	}
 
 }
