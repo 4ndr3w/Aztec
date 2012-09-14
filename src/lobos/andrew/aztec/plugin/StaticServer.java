@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import lobos.andrew.aztec.Config;
+import lobos.andrew.aztec.http.ErrorFactory;
 import lobos.andrew.aztec.http.HTTPRequest;
 import lobos.andrew.aztec.http.HTTPResponse;
 
@@ -35,10 +36,10 @@ public class StaticServer extends Plugin {
 				}
 				return new HTTPResponse(200, fileData);
 			} catch (Exception e) {
-				return new HTTPResponse(500, "<h1>Internal Server Error</h1>");
+				return ErrorFactory.internalServerError();
 			}
 		}
-		return new HTTPResponse(404, "<h1>Not Found</h1>");
+		return ErrorFactory.notFound();
 	}
 
 }

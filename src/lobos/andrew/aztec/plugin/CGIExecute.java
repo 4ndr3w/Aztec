@@ -3,6 +3,7 @@ package lobos.andrew.aztec.plugin;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import lobos.andrew.aztec.http.ErrorFactory;
 import lobos.andrew.aztec.http.HTTPRequest;
 import lobos.andrew.aztec.http.HTTPResponse;
 
@@ -37,7 +38,7 @@ public class CGIExecute extends Plugin {
 			}
 			
 		} catch (Exception e) {
-			return new HTTPResponse(500, "CGI process failed to start.");
+			return ErrorFactory.internalServerError("CGI process failed to start.");
 		}
 		return new HTTPResponse(200, responseData);
 	}

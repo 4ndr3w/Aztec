@@ -48,7 +48,7 @@ public class HTTPRequestHandler {
 			debugData += d+": "+req.headers.get(d)+"<br>";
 		}
 
-		return new HTTPResponse(500, "<h1>500 - Internal Server Error</h1>No plugins where able to handle your request.<br>"+debugData);
+		return ErrorFactory.internalServerError("No plugins where able to handle your request.<br>"+debugData);
 		
 	}
 }
