@@ -10,7 +10,6 @@ import java.net.Socket;
 import lobos.andrew.aztec.http.HTTPRequest;
 import lobos.andrew.aztec.http.HTTPRequestHandler;
 import lobos.andrew.aztec.http.HTTPResponse;
-import lobos.andrew.aztec.plugin.Index;
 
 public class ClientHandler extends Thread {
 	Socket client = null;
@@ -26,7 +25,6 @@ public class ClientHandler extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		HTTPRequestHandler.getInstance().registerPlugin(new Index());
 		start();
 	}
 	
