@@ -17,12 +17,15 @@ public class Config {
 		while ( reader.ready() )
 		{
 			String[] line = reader.readLine().split(" ", 2);
-			String[] configArgs = line[0].split(":");
-			if ( line.length == 2 && configArgs.length == 2 )
+			if ( line[0].length() > 0 && line[0].charAt(0) != '#' )
 			{
-				if ( !config.containsKey(configArgs[0]) )
-					config.put(configArgs[0], new HashMap<String,String>());
-				config.get(configArgs[0]).put(configArgs[1], line[1]);
+				String[] configArgs = line[0].split(":", 2);
+				if ( line.length == 2 && configArgs.length == 2 )
+				{
+					if ( !config.containsKey(configArgs[0]) )
+						config.put(configArgs[0], new HashMap<String,String>());
+					config.get(configArgs[0]).put(configArgs[1], line[1]);
+				}
 			}
 		}
 		reader.close();
