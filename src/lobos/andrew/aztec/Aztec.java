@@ -1,10 +1,11 @@
 package lobos.andrew.aztec;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import lobos.andrew.aztec.http.HTTPRequestHandler;
 import lobos.andrew.aztec.plugin.Plugin;
-import lobos.andrew.aztec.plugin.StaticServer;
+import lobos.andrew.aztec.plugin.VirtualHost;
 
 public class Aztec {
 
@@ -25,11 +26,22 @@ public class Aztec {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Config.init();
+		Config.init();		
 		
-		Config.ensureDefined("port");
-		Config.ensureDefined("docroot");
-		registerPlugin(new StaticServer());
+		String globalDocroot = Config.getString("global", "docroot", "/var/www");
+		
+		Iterator<String> domains = Config.getDomainSet().iterator();
+		
+		while ( domains.hasNext() )
+		{
+			String thisDomain = (String) domains.next();
+			if ( !thisDomain.equals("global") )
+			{
+				registerPlugin(new VirtualHost(thisDomain, Config.getString(thisDomain, "docroot", globalDocroot)));
+			}
+		}
+		registerPlugin(new VirtualHost(globalDocroot));
+		
 		try { start(); }
 		catch (IOException e)
 		{

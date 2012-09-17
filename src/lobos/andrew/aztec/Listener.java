@@ -9,7 +9,7 @@ public class Listener extends Thread {
 	
 	public Listener() throws IOException
 	{
-		server = new ServerSocket(Config.getInt("port"));
+		server = new ServerSocket(Config.getInt("global", "port", 8080));
 		start();
 	}
 	
@@ -21,7 +21,6 @@ public class Listener extends Thread {
 				Socket client = server.accept();
 				new ClientHandler(client);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
