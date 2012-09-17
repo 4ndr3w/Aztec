@@ -1,5 +1,6 @@
 package lobos.andrew.aztec;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -24,9 +25,24 @@ public class Aztec {
 		new Listener();
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		
-		Config.init();		
+		File configPath = new File("AztecConfig.conf");
+		if ( args.length > 0 )
+			configPath = new File(args[0]);
+		if ( !configPath.exists() || !configPath.isFile() || !configPath.canRead() )
+		{
+			System.out.println("Unable to open config file: "+configPath.getAbsolutePath());
+			System.exit(0);
+		}
+		
+		try {
+			Config.init(configPath.getAbsolutePath());
+		} catch (IOException e1) {
+			System.out.println("Reading of config file at "+configPath.getAbsolutePath()+" failed!");
+			e1.printStackTrace();
+			System.exit(0);
+		}		
 		
 		String globalDocroot = Config.getString("global", "docroot", "/var/www");
 		

@@ -7,13 +7,12 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Config {
-	static private String configPath = "/AztecConfig.ini";
 	private static HashMap<String, HashMap<String,String>> config = new HashMap<String, HashMap<String,String>>();
 	
 	
-	public static void init() throws IOException
+	public static void init(String path) throws IOException
 	{
-		FileReader file = new FileReader(configPath);
+		FileReader file = new FileReader(path);
 		BufferedReader reader = new BufferedReader(file);
 		while ( reader.ready() )
 		{
