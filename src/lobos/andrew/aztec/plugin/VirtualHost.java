@@ -26,7 +26,8 @@ public class VirtualHost extends Plugin {
 	}
 	
 	@Override
-	public HTTPResponse handle(HTTPRequest req) {
+	public HTTPResponse handle(HTTPRequest req) 
+	{
 		String HTTPAuthUsername = Config.getString(HOST, "AuthUsername", "");
 		if ( !HTTPAuthUsername.equals("") )
 		{

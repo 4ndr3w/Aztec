@@ -25,8 +25,8 @@ public class Aztec {
 		new Listener();
 	}
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) 
+	{
 		File configPath = new File("AztecConfig.conf");
 		if ( args.length > 0 )
 			configPath = new File(args[0]);
@@ -64,5 +64,4 @@ public class Aztec {
 			System.out.println("Aztec failed to start!");
 		}
 	}
-
 }

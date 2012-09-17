@@ -15,7 +15,8 @@ public class CGIExecute extends Plugin {
 	}
 
 	@Override
-	public HTTPResponse handle(HTTPRequest req) {
+	public HTTPResponse handle(HTTPRequest req) 
+	{
 		Map<String, String> env = cgiApp.environment();
 		env.put("PATH_TRANSLATED", req.getPath());
 		env.put("PATH_INFO", req.getPath());
