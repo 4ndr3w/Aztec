@@ -53,7 +53,7 @@ public class VirtualHost extends Plugin {
 			path += "index.html";
 		File f = new File(docRoot+"/"+path);
 		
-		if ( f.canExecute() && f.getName().split("\\.")[1].equals("cgi") )
+		if ( Config.getString(HOST, "CGIEnabled", "no").equals("yes") && f.canExecute() && f.getName().split("\\.")[1].equals("cgi") )
 			return new CGIExecute(f.getAbsolutePath()).handle(req);
 		else if ( f.exists() )
 		{
