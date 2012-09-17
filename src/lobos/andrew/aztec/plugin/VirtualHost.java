@@ -33,7 +33,7 @@ public class VirtualHost extends Plugin {
 			String responseAuthHeader = req.getHeader("Authorization");
 			if ( responseAuthHeader.equals("") )
 			{
-				HTTPResponse response = new HTTPResponse(401, "Authentication Required");
+				HTTPResponse response = ErrorFactory.notAuthorized();
 				response.addResponseHeader("WWW-Authenticate", "Basic realm=\""+Config.getString(HOST, "AuthRealm", "Secure Site")+"\"");
 				return response;
 			}
@@ -43,7 +43,7 @@ public class VirtualHost extends Plugin {
 				String correctString = HTTPAuthUsername+":"+Config.getString(HOST, "AuthPassword", "");
 				correctString = DatatypeConverter.printBase64Binary(correctString.getBytes());
 				if ( authString.equals(correctString) )
-					return new HTTPResponse(401, "Not Authorized");
+					return ErrorFactory.notAuthorized();
 			}
 		}
 		

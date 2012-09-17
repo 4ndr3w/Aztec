@@ -19,7 +19,7 @@ public class HTTPResponse {
 			case 200:
 				return "OK";
 			case 401:
-				return "Unauthorized";
+				return "Not Authorized";
 			case 403:
 				return "Forbidden";
 			case 404:

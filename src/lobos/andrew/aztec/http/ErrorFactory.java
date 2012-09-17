@@ -16,4 +16,9 @@ public class ErrorFactory {
 		return internalServerError("");
 	}
 	
+	public static HTTPResponse notAuthorized()
+	{
+		return new HTTPResponse(401, "<h1>Not Authorized</h1>");
+	}
+	
 }
