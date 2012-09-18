@@ -44,14 +44,14 @@ public class Aztec {
 			System.exit(0);
 		}		
 		
-		String globalDocroot = Config.getString("global", "docroot", "/var/www");
+		String globalDocroot = Config.getString("default", "docroot", "/var/www");
 		
 		Iterator<String> domains = Config.getDomainSet().iterator();
 		
 		while ( domains.hasNext() )
 		{
 			String thisDomain = (String) domains.next();
-			if ( !thisDomain.equals("global") )
+			if ( !thisDomain.equals("global") && !thisDomain.equals("default") )
 			{
 				registerPlugin(new VirtualHost(thisDomain, Config.getString(thisDomain, "docroot", globalDocroot)));
 			}
