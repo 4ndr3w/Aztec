@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import lobos.andrew.aztec.http.ErrorFactory;
 import lobos.andrew.aztec.http.HTTPRequest;
 import lobos.andrew.aztec.http.HTTPRequestHandler;
 import lobos.andrew.aztec.http.HTTPResponse;
@@ -31,8 +32,17 @@ public class ClientHandler extends Thread {
 	public void run()
 	{
 		try {
-			HTTPRequest req = HTTPRequest.fromSocket(client);
-			HTTPResponse response = HTTPRequestHandler.getInstance().handle(req);
+			HTTPResponse response = null;
+			try
+			{
+				HTTPRequest req = HTTPRequest.fromSocket(client);
+				response = HTTPRequestHandler.getInstance().handle(req);
+			}
+			catch ( Exception e )
+			{
+				e.printStackTrace();
+				response = ErrorFactory.internalServerError("handle() threw exception");
+			}
 			response.send(client);
 			client.close();
 		} catch (IOException e) {

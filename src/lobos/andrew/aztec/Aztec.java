@@ -56,7 +56,7 @@ public class Aztec {
 				registerPlugin(new VirtualHost(thisDomain, Config.getString(thisDomain, "docroot", globalDocroot)));
 			}
 		}
-		registerPlugin(new VirtualHost(globalDocroot));
+		registerPlugin(new VirtualHost(Config.getString("default", "docroot", "/var/www")));
 		
 		try { start(); }
 		catch (IOException e)

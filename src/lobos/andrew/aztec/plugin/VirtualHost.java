@@ -53,7 +53,7 @@ public class VirtualHost extends Plugin {
 			path += "index.html";
 		File f = new File(docRoot+"/"+path);
 		
-		if ( Config.getString(HOST, "CGIEnabled", "no").equals("yes") && f.canExecute() && f.getName().split("\\.")[1].equals("cgi") )
+		if ( f.getName().split("\\.")[1].equals("cgi") )
 			return new CGIExecute(f.getAbsolutePath()).handle(req);
 		else if ( f.exists() )
 		{
@@ -69,7 +69,7 @@ public class VirtualHost extends Plugin {
 				}
 				return new HTTPResponse(200, fileData);
 			} catch (Exception e) {
-				return ErrorFactory.internalServerError();
+				return ErrorFactory.internalServerError("Error serving file");
 			}
 		}
 		return ErrorFactory.notFound();

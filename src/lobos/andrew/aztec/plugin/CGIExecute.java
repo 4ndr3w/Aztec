@@ -21,7 +21,7 @@ public class CGIExecute extends Plugin {
 		env.put("PATH_TRANSLATED", req.getPath());
 		env.put("PATH_INFO", req.getPath());
 		env.put("REMOTE_ADDR", req.getClientIP());
-		env.put("QUERY_STRING", req.getQueryString());
+		//env.put("QUERY_STRING", req.getQueryString());
 		String responseData = "";
 		try {
 			Process cgiProcess = cgiApp.start();
