@@ -124,15 +124,19 @@ public class HTTPRequest {
 	
 	public String getQueryString()
 	{
-		Iterator<String> it = queryData.keySet().iterator();
-		String output = "";
-		while ( it.hasNext() )
+		try
 		{
-			String thisKey = it.next();
-			output += thisKey+"="+queryData.get(thisKey)+"&";
+			Iterator<String> it = queryData.keySet().iterator();
+			String output = "";
+			while ( it.hasNext() )
+			{
+				String thisKey = it.next();
+				output += thisKey+"="+queryData.get(thisKey)+"&";
+			}
+			return output.substring(0,output.length()-1);
+		} catch (Exception e) {
+			return "";
 		}
-		return output.substring(0,output.length()-1);
-		
 	}
 
 }
